@@ -1,44 +1,38 @@
-export default function AssignmentsDao(db) {
-    let { assignments } = db;
+import { v4 as uuidv4 } from "uuid";
+import model from "./model.js";
 
-    const findAssignmentsForCourse = (courseId) =>
-        assignments.filter((assignment) => assignment.course === courseId);
+export default function AssignmentsDao() {
+  const findAssignmentsForCourse = async (courseId) => {
+    return model.find({ course: courseId });
+  };
 
-    const findAssignmentById = (assignmentId) =>
-        assignments.find((assignment) => assignment._id === assignmentId);
+  const findAssignmentById = async (assignmentId) => {
+    return model.findById(assignmentId);
+  };
 
-    const createAssignment = (assignment) => {
-        const newAssignment = {
-            ...assignment,
-            _id: new Date().getTime().toString(),
-        };
-        assignments = [...assignments, newAssignment];
-        db.assignments = assignments;
-        return newAssignment;
+  const createAssignment = async (assignment) => {
+    const { _id, ...assignmentWithoutId } = assignment;
+    const newAssignment = {
+      ...assignmentWithoutId,
+      _id: uuidv4(),
     };
+    return model.create(newAssignment);
+  };
 
-    const updateAssignment = (assignmentId, assignmentUpdates) => {
-        assignments = assignments.map((assignment) =>
-            assignment._id === assignmentId
-                ? { ...assignment, ...assignmentUpdates, _id: assignmentId }
-                : assignment
-        );
-        db.assignments = assignments;
-        return findAssignmentById(assignmentId);
-    };
+  const updateAssignment = async (assignmentId, assignmentUpdates) => {
+    await model.updateOne({ _id: assignmentId }, { $set: assignmentUpdates });
+    return model.findById(assignmentId);
+  };
 
-    const deleteAssignment = (assignmentId) => {
-        assignments = assignments.filter(
-            (assignment) => assignment._id !== assignmentId
-        );
-        db.assignments = assignments;
-    };
+  const deleteAssignment = async (assignmentId) => {
+    return model.deleteOne({ _id: assignmentId });
+  };
 
-    return {
-        findAssignmentsForCourse,
-        findAssignmentById,
-        createAssignment,
-        updateAssignment,
-        deleteAssignment,
-    };
+  return {
+    findAssignmentsForCourse,
+    findAssignmentById,
+    createAssignment,
+    updateAssignment,
+    deleteAssignment,
+  };
 }
