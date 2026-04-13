@@ -3,7 +3,6 @@ import mongoose from 'mongoose';
 import Hello from "./Hello.js"
 import Lab5 from "./Lab5/index.js";
 import cors from "cors";
-import db from "./(kambaz)/database/index.js";
 import UserRoutes from "./(kambaz)/users/routes.js";
 import ModulesRoutes from './(kambaz)/modules/routes.js';
 import "dotenv/config";
