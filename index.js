@@ -13,7 +13,7 @@ import EnrollmentsRoutes from './(kambaz)/enrollments/routes.js';
 import QuizzesRoutes from './(kambaz)/quizzes/routes.js';
 import QuizAttemptsRoutes from './(kambaz)/quizAttempts/routes.js';
 
-const CONNECTION_STRING = "mongodb://127.0.0.1:27017/kambaz"
+const CONNECTION_STRING = process.env.DATABASE_CONNECTION_STRING || "mongodb://127.0.0.1:27017/kambaz"
 mongoose.connect(CONNECTION_STRING);
 
 const app = express()
