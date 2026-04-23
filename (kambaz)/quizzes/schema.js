@@ -59,7 +59,7 @@ const quizSchema = new mongoose.Schema(
     timeLimit: { type: Number, default: 20 },
     multipleAttempts: { type: Boolean, default: false },
     howManyAttempts: { type: Number, default: 1 },
-    showCorrectAnswers: { type: String, default: "" },
+    showCorrectAnswers: { type: Boolean, default: false },
     accessCode: { type: String, default: "" },
     oneQuestionAtATime: { type: Boolean, default: true },
     webcamRequired: { type: Boolean, default: false },
