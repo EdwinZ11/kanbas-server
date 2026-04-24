@@ -21,6 +21,7 @@ const questionSchema = new mongoose.Schema(
     points: { type: Number, default: 0 },
     question: String,
 
+    // for multiple choice
     choices: [questionChoiceSchema],
 
     trueFalseAnswer: Boolean,
